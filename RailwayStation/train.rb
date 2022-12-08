@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Train
-  attr_accessor :speed
-  attr_reader :number_wagons, :stations, :type, :current_station, :next_station, :previous_station
+  attr_accessor :speed, :number_wagons
+  attr_reader :number, :stations, :type, :current_station, :next_station, :previous_station
 
   def initialize(number, type, number_wagons)
     @speed = 0
@@ -40,7 +40,7 @@ class Train
   end
 
   def go_next_station
-    if @current_station == @stations[-1]
+    if current_station == @stations[-1]
       puts "It's last station in route. There is no next stations"
       @next_station = nil
       @current_station = @stations[-1]
