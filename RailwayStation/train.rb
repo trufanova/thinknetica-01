@@ -1,34 +1,41 @@
 # frozen_string_literal: true
 
+# Train class
 class Train
-  attr_accessor :speed, :number_wagons
-  attr_reader :number, :stations, :type, :current_station, :next_station, :previous_station
+  attr_accessor :speed, :number
+  attr_reader :stations, :type, :current_station, :next_station, :previous_station, :wagons
 
-  def initialize(number, type, number_wagons)
+  def initialize(number)
     @speed = 0
+    @wagons = []
     @number = number
-    @type = type.to_sym
-    @number_wagons = number_wagons
   end
 
   def stop
     self.speed = 0
   end
 
-  def attach_wagon
-    if speed.zero?
-      @number_wagons += 1
-    else
+  def attach_wagon(wagon)
+    unless speed.zero?
       puts "You can't attach wagons while the train is moving"
+      return
     end
+    if @wagons.include?(wagon)
+      puts 'This wagon is already attacht. Please enter correct wagon'
+      return
+    end
+    @wagons << wagon
   end
 
-  def detach_wagon
-    if speed.zero?
-      @number_wagons -= 1
-    else
-      puts "You can't detach wagons while the train is moving"
+  def detach_wagon(number)
+    unless speed.zero?
+      puts "You can't dettach wagons while the train is moving"
+      return
     end
+    @wagons.each do |wagon|
+      return @wagons.delete(wagon) if wagon.number == number.to_i
+    end
+    puts "There is no wagon with №#{number} at this train"
   end
 
   def route(route)
