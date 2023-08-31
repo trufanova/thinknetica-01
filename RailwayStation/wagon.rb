@@ -4,7 +4,8 @@
 class Wagon
   attr_reader :type, :number
 
-  def initialize(number)
-    @number = number.to_i
+  def initialize(number, type)
+    @number = number
+    @type = type
   end
 end

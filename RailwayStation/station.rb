@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Station class
 class Station
   attr_reader :trains, :name
 
@@ -17,7 +18,7 @@ class Station
   end
 
   def show_trains
-    puts 'List trains at the station: '
+    puts 'List trains at the station: '.colorize(:green)
     trains.each { |train| puts train }
   end
 
@@ -28,6 +29,6 @@ class Station
     end
     puts "#{type.to_s.capitalize} trains: #{sorted_trains.size}"
 
-    sorted_trains.each{|train| puts train.number}
+    sorted_trains.each { |train| puts train.number }
   end
 end
