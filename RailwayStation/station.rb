@@ -4,8 +4,8 @@
 class Station
   attr_reader :trains, :name
 
-  def initialize(name)
-    @name = name.to_sym
+  def initialize(value)
+    @name = value.strip.capitalize
     @trains = []
   end
 

@@ -135,9 +135,9 @@ def create_route
   when :new
     puts 'Creating new route...'
     puts 'Enter start station name: '
-    start_station = gets.chomp.to_sym
+    start_station = gets.chomp.strip.capitalize
     puts 'Enter end station name: '
-    end_station = gets.chomp.to_sym
+    end_station = gets.chomp.strip.capitalize
     new_route = Route.new(start_station, end_station)
     puts "Create route '#{new_route.name}'"
   when :manage
@@ -151,11 +151,11 @@ def create_route
 
       show_all_routes
       puts 'Enter target route name '
-      target_route = gets.chomp
+      target_route = gets.chomp.strip
       found_route = find_route(target_route)
 
       puts 'Enter station name '
-      station = gets.chomp.to_sym
+      station = Station.new(gets.chomp.strip.capitalize)
       found_route&.add_station(station)
 
     when :del
@@ -285,7 +285,7 @@ def view_stations_and_trains
   puts 'View stations and trains'
   puts "Enter 'stations' to view list of stations"
   puts "Enter 'trains' to view list of trains on station"
-  user_answer = gets.chomp.to_sym
+  user_answer = gets.chomp.strip.capitalize
 
   case user_answer
   when :stations
@@ -298,7 +298,7 @@ def view_stations_and_trains
   when :trains
     # show_all_routes
     puts 'Enter station name '
-    target_station = gets.chomp.to_sym
+    target_station = gets.chomp.strip.capitalize
     found_station = find_station(target_station)
     found_station.show_trains
   else 

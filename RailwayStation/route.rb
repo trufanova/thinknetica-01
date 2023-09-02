@@ -5,8 +5,10 @@ class Route
   attr_reader :stations, :name
 
   def initialize(start_station, end_station)
-    @stations = [start_station, end_station]
-    @name = "#{start_station.name.capitalize} - #{end_station.name.capitalize}"
+    # start_station_normalize = start_station.to_s.strip.capitalize
+    # end_station_normalize = end_station.to_s.strip.capitalize
+    @stations = [Station.new(start_station), Station.new(end_station)]
+    @name = "#{start_station} - #{end_station}"
   end
 
   def add_station(station)
@@ -23,7 +25,7 @@ class Route
 
   def show_stations
     puts 'Stations list: '
-    stations.each { |station| puts station.name.capitalize }
+    stations.each { |station| puts station.name }
   end
 
   private
