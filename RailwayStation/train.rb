@@ -1,13 +1,17 @@
 # frozen_string_literal: true
+require_relative 'manufacturer'
 
 # Train class
 class Train
+  include Manufacturer
+
   attr_reader :speed, :number, :stations, :type, :current_station, :next_station, :previous_station, :wagons
 
-  def initialize(number)
+  def initialize(number, manufacturer)
     @speed = 0
     @wagons = []
     @number = number
+    @manufacturer = manufacturer
   end
 
   def route(route)

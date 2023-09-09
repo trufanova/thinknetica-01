@@ -9,6 +9,7 @@ require_relative 'station'
 require_relative 'route'
 require_relative 'wagon'
 
+
 MENU = [
   { index: 1, title: 'Create new station', action: :create_station },
   { index: 2, title: 'Create new train', action: :create_train },
