@@ -9,6 +9,13 @@ class Station
     @trains = []
   end
 
+  #В классе Station (жд станция) создать метод класса all, который возвращает все станции (объекты), созданные на данный момент
+  def self.all 
+    ObjectSpace.each_object(self) do |station|
+      puts station.name
+    end
+  end
+
   def take_train(train)
     trains.push(train) if trains.include?(train) == false
   end
