@@ -110,14 +110,7 @@ def find_route(route_name)
   nil
 end
 
-def find_train(train_number)
-  trains = ObjectSpace.each_object(Train).to_a
-  trains.each do |train|
-    return train if train.number == train_number
-  end
-  puts "Train '#{train_number}' is not exist"
-  nil
-end
+
 
 def find_wagon(wagon_number)
   wagons = ObjectSpace.each_object(Wagon).to_a
