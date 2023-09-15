@@ -7,6 +7,14 @@ class Train
 
   attr_reader :speed, :number, :stations, :type, :current_station, :next_station, :previous_station, :wagons
 
+  def self.find(train_number)
+    trains = ObjectSpace.each_object(self).to_a
+    trains.each do |train|
+      return train if train.number == train_number
+    end
+    nil
+  end
+
   def initialize(number, manufacturer)
     @speed = 0
     @wagons = []
