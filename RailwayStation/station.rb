@@ -1,10 +1,12 @@
 # frozen_string_literal: true
-
+require_relative 'instance_counter'
 # Station class
 class Station
+  include InstanceCounter
   attr_reader :trains, :name
 
   def initialize(value)
+    register_instance
     @name = value.strip.capitalize
     @trains = []
   end

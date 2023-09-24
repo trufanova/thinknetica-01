@@ -1,12 +1,12 @@
 # frozen_string_literal: true
-
+require_relative 'instance_counter'
 # Route class
 class Route
+  include InstanceCounter
   attr_reader :stations, :name
 
   def initialize(start_station, end_station)
-    # start_station_normalize = start_station.to_s.strip.capitalize
-    # end_station_normalize = end_station.to_s.strip.capitalize
+    register_instance
     @stations = [Station.new(start_station), Station.new(end_station)]
     @name = "#{start_station} - #{end_station}"
   end

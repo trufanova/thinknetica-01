@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 require_relative 'manufacturer'
+require_relative 'instance_counter'
 
 # Train class
 class Train
   include Manufacturer
+  include InstanceCounter
 
   attr_reader :speed, :number, :stations, :type, :current_station, :next_station, :previous_station, :wagons
 
@@ -16,6 +18,7 @@ class Train
   end
 
   def initialize(number, manufacturer)
+    register_instance
     @speed = 0
     @wagons = []
     @number = number
