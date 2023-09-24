@@ -41,11 +41,13 @@ def create_train
   number_train = gets.chomp.to_sym
   puts 'Enter type of train: 1 - cargo, 2 - passenger'
   type_train = gets.to_i
+  puts 'Enter manufacturer of train:'
+  manufacturer = gets.chomp
   case type_train
   when 1
-    name_class_train = TrainCargo.new(number_train)
+    name_class_train = TrainCargo.new(number_train, manufacturer)
   when 2
-    name_class_train = TrainPassenger.new(number_train)
+    name_class_train = TrainPassenger.new(number_train, manufacturer)
   end
   puts "Created new train: #{name_class_train.number}"
 end
