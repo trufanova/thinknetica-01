@@ -1,18 +1,21 @@
 # frozen_string_literal: true
 require_relative 'manufacturer'
 require_relative 'instance_counter'
+require_relative 'instance_tracker'
 
 # Train class
 class Train
   include Manufacturer
   include InstanceCounter
+  include InstanceTracker
 
   attr_reader :speed, :number, :stations, :type, :current_station, :next_station, :previous_station, :wagons
 
   def self.find(train_number)
-    trains = ObjectSpace.each_object(self).to_a
-    trains.each do |train|
-      return train if train.number == train_number
+    trains = self.instances
+
+    trains.each do |key, train|
+      return "Train number: #{train.number}, Type: #{train.type}, Manufacturer: #{train.manufacturer}, Speed: #{train.speed}" if train.number == train_number
     end
     nil
   end
@@ -23,6 +26,7 @@ class Train
     @wagons = []
     @number = number
     @manufacturer = manufacturer
+    self.class.add_instance(self)
   end
 
   def route(route)

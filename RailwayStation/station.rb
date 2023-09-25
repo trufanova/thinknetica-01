@@ -1,20 +1,23 @@
 # frozen_string_literal: true
 require_relative 'instance_counter'
+require_relative 'instance_tracker'
 # Station class
 class Station
   include InstanceCounter
+  include InstanceTracker
   attr_reader :trains, :name
 
   def initialize(value)
     register_instance
     @name = value.strip.capitalize
     @trains = []
+    self.class.add_instance(self)
   end
 
-  #В классе Station (жд станция) создать метод класса all, который возвращает все станции (объекты), созданные на данный момент
   def self.all 
-    ObjectSpace.each_object(self) do |station|
-      puts station.name
+    stations = self.instances
+    stations.each do  |key, value|
+      puts value.name
     end
   end
 
