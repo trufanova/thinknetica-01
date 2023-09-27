@@ -11,7 +11,7 @@ class Train
 
   attr_reader :speed, :number, :stations, :type, :current_station, :next_station, :previous_station, :wagons
 
-  NUMBER_FORMAT = /^[a-zA-Z0-9\s]+$/
+  NUMBER_FORMAT = /^[a-zA-Z\d]{3}-?[a-zA-Z\d]{2}$/
   MANUFACTURER_FORMAT = /^[a-zA-Z0-9\s]{2,}$/
 
   def self.find(train_number)
