@@ -9,6 +9,13 @@ class Route
     register_instance
     @stations = [Station.new(start_station), Station.new(end_station)]
     @name = "#{start_station} - #{end_station}"
+    validate!
+  end
+
+  def valid?
+    validate!
+  rescue
+    false
   end
 
   def add_station(station)
@@ -31,4 +38,8 @@ class Route
   private
 
   attr_writer :stations, :name
+  def validate!
+    raise ArgumentError, "Invalid station. Expected a Station object." unless station.is_a?(Station)
+    true
+  end
 end

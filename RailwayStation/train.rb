@@ -11,6 +11,9 @@ class Train
 
   attr_reader :speed, :number, :stations, :type, :current_station, :next_station, :previous_station, :wagons
 
+  NUMBER_FORMAT = /^[a-zA-Z0-9\s]+$/
+  MANUFACTURER_FORMAT = /^[a-zA-Z0-9\s]{2,}$/
+
   def self.find(train_number)
     trains = self.instances
 
@@ -26,7 +29,14 @@ class Train
     @wagons = []
     @number = number
     @manufacturer = manufacturer
+    validate!
     self.class.add_instance(self)
+  end
+
+  def valid?
+    validate!
+  rescue
+    false
   end
 
   def route(route)
@@ -95,4 +105,11 @@ class Train
   private
 
   attr_writer :speed, :number
+
+  def validate!
+    raise ArgumentError, "Manufacturer must contain at least 2 letters or digits" if manufacturer !~ MANUFACTURER_FORMAT
+    raise ArgumentError, "Number must contain only letters or digits" if number !~ NUMBER_FORMAT
+    true
+  end
+  
 end
