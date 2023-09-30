@@ -51,18 +51,9 @@ class Train
     self.speed = 0
   end
 
-  def attach_wagon(wagon)
-    if wagons.include?(wagon)
-      puts 'This wagon is already attached. Please enter correct wagon'.colorize(:red)
-      return
-    end
-
-    if speed.zero? && wagon.type == type
-      wagons << wagon
-      puts 'Wagon successfully attached'.colorize(:green)
-    end
-    puts 'The type of train and carriage should be similar' unless type == wagon.type
-    puts 'Please, stop the train before attaching wagons' unless speed.zero?
+  def attach_wagon
+    validate_wagon!
+    wagons << wagon
   end
 
   def detach_wagon(wagon)
@@ -73,14 +64,14 @@ class Train
     wagons.each do |wagon_elem|
       return wagons.delete(wagon_elem) if wagon_elem == wagon
 
-      puts 'Wagon successfully detached'.green
+      puts 'Wagon successfully detached'.colorize(:green)
     end
     puts "There is no wagon with №#{number} at this train".colorize(:red)
   end
 
   def go_next_station
     if @current_station == @stations[-1]
-      puts "It's last station in route. There is no next stations"
+      puts "It's last station in route. There is no next stations".colorize(:red)
       @next_station = nil
       @current_station = @stations[-1]
     else
@@ -108,8 +99,15 @@ class Train
 
   def validate!
     raise ArgumentError, "Manufacturer must contain at least 2 letters or digits" if manufacturer !~ MANUFACTURER_FORMAT
-    raise ArgumentError, "Number must contain only letters or digits" if number !~ NUMBER_FORMAT
+    raise ArgumentError, "Number of train must contain only letters or digits: ***-** or *****" if number !~ NUMBER_FORMAT
     true
   end
   
+  def validate_wagon!
+    raise ArgumentError, "The type of train and carriage should be similar" unless type == wagon.type
+    raise ArgumentError, "Please, stop the train before attaching wagons" unless speed.zero?
+    raise ArgumentError, "This wagon is already attached. Please enter correct wagon" if wagons.include?(wagon)
+  end
+
+
 end

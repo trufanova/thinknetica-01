@@ -5,6 +5,14 @@ class Route
   include InstanceCounter
   attr_reader :stations, :name
 
+  def self.find(route_name)
+    routes = self.instances
+    routes.each do |key, route|
+      return route if route.name == route_name
+    end
+    nil
+  end
+
   def initialize(start_station, end_station)
     register_instance
     @stations = [Station.new(start_station), Station.new(end_station)]

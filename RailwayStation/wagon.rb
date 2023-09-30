@@ -7,6 +7,14 @@ class Wagon
 
   NUMBER_FORMAT = /^[a-zA-Z0-9\s]+$/
 
+  def self.find(wagon_number)
+    wagons = self.instances
+    wagons.each do |key, wagon|
+      return "Wagon number: #{wagon.number}, Type: #{wagon.type}, Manufacturer: #{wagon.manufacturer}" if wagon.number == wagon_number
+    end
+    nil
+  end
+
   def initialize(number, type)
     @number = number
     @type = type

@@ -8,7 +8,5 @@ class TrainPassenger < Train
     super
     @type = :passenger
     Train.increment_instances
-    # puts "Train instances: #{Train.instances_count} "
-    # puts "Passenger instances: #{TrainPassenger.instances_by_class}"
   end
 end
