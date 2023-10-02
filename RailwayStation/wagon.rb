@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 require_relative 'manufacturer'
+require_relative 'validation'
 # wagon
 class Wagon
   include Manufacturer
+  include Validation
   attr_reader :type, :number
 
   NUMBER_FORMAT = /^[a-zA-Z0-9\s]+$/
@@ -20,12 +22,6 @@ class Wagon
     @type = type
     validate!
   end
-
-  def valid?
-    validate!
-  rescue
-    false
-  end
   
   private
 
@@ -34,6 +30,5 @@ class Wagon
     raise ArgumentError, "Number can't be empty" if number.nil? || number.empty?
     raise ArgumentError, "Number must contain only letters, digits, or spaces" unless number =~ NUMBER_FORMAT
     raise ArgumentError, "Invalid type. Allowed types: #{valid_types.join(', ')}" unless valid_types.include?(type)
-    true
   end
 end

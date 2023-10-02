@@ -8,6 +8,7 @@ require_relative 'train_passenger'
 require_relative 'station'
 require_relative 'route'
 require_relative 'wagon'
+require_relative 'validation'
 
 
 MENU = [
@@ -41,9 +42,7 @@ def create_train
   number_train = gets.chomp.to_sym
   puts 'Enter type of train: 1 - cargo, 2 - passenger'
   type_train = gets.to_i
-  if ![1, 2].include?(type_train)
-    raise ArgumentError, 'Invalid type. Please enter 1 for cargo or 2 for passenger.'
-  end
+
   puts 'Enter manufacturer of train:'
   manufacturer = gets.chomp
   case type_train

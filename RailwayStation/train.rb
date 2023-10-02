@@ -2,12 +2,14 @@
 require_relative 'manufacturer'
 require_relative 'instance_counter'
 require_relative 'instance_tracker'
+require_relative 'validation'
 
 # Train class
 class Train
   include Manufacturer
   include InstanceCounter
   include InstanceTracker
+  include Validation
 
   attr_reader :speed, :number, :stations, :type, :current_station, :next_station, :previous_station, :wagons
 
@@ -33,11 +35,7 @@ class Train
     self.class.add_instance(self)
   end
 
-  def valid?
-    validate!
-  rescue
-    false
-  end
+
 
   def route(route)
     @route = route.name
@@ -98,16 +96,17 @@ class Train
   attr_writer :speed, :number
 
   def validate!
-    raise ArgumentError, "Manufacturer must contain at least 2 letters or digits" if manufacturer !~ MANUFACTURER_FORMAT
-    raise ArgumentError, "Number of train must contain only letters or digits: ***-** or *****" if number !~ NUMBER_FORMAT
-    true
+    errors = []
+    errors << "Manufacturer must contain at least 2 letters or digits" if manufacturer !~ MANUFACTURER_FORMAT
+    errors << "Number of train must contain only letters or digits: ***-** or *****" if number !~ NUMBER_FORMAT
+    raise ArgumentError, errors.join('. ') unless errors.empty?
   end
   
   def validate_wagon!
-    raise ArgumentError, "The type of train and carriage should be similar" unless type == wagon.type
-    raise ArgumentError, "Please, stop the train before attaching wagons" unless speed.zero?
-    raise ArgumentError, "This wagon is already attached. Please enter correct wagon" if wagons.include?(wagon)
+    errors = []
+    errors << "The type of train and carriage should be similar" unless type == wagon.type
+    errors << "Please, stop the train before attaching wagons" unless speed.zero?
+    errors << "This wagon is already attached. Please enter correct wagon" if wagons.include?(wagon)
+    raise ArgumentError, errors.join('. ') unless errors.empty?
   end
-
-
 end

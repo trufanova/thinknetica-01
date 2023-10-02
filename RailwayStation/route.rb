@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 require_relative 'instance_counter'
+require_relative 'validation'
 # Route class
 class Route
   include InstanceCounter
+  include Validation
   attr_reader :stations, :name
 
   def self.find(route_name)
@@ -18,12 +20,6 @@ class Route
     @stations = [Station.new(start_station), Station.new(end_station)]
     @name = "#{start_station} - #{end_station}"
     validate!
-  end
-
-  def valid?
-    validate!
-  rescue
-    false
   end
 
   def add_station(station)
@@ -48,6 +44,5 @@ class Route
   attr_writer :stations, :name
   def validate!
     raise ArgumentError, "Invalid station. Expected a Station object." unless station.is_a?(Station)
-    true
   end
 end

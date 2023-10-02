@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 require_relative 'instance_counter'
 require_relative 'instance_tracker'
+require_relative 'validation'
 # Station class
 class Station
   include InstanceCounter
   include InstanceTracker
+  include Validation
   attr_reader :trains, :name
 
   NAME_FORMAT = /^[a-zA-Z0-9\s]+$/
@@ -15,12 +17,6 @@ class Station
     @trains = []
     self.class.add_instance(self)
     validate!
-  end
-
-  def valid?
-    validate!
-  rescue
-    false
   end
 
   def self.all 
@@ -57,6 +53,5 @@ class Station
 
   def validate!
     raise ArgumentError, "Name must contain only letters or digits" if name !~ NAME_FORMAT
-    true
   end
 end
